@@ -18,9 +18,8 @@ const Lang = imports.lang; //  ++ Needed for menus
 const GLib = imports.gi.GLib; // ++ Needed for starting programs
 const Mainloop = imports.mainloop; // Needed for timer update loop
 
-const APPLET_PATH = "/applets/bumblebee@marmistrz/icons/"
-const NV_ICON = global.userdatadir + APPLET_PATH + "nvidia.svg"
-const INTEL_ICON = global.userdatadir + APPLET_PATH + "intel.svg"
+const NV_ICON = metadata.path + "/icons/nvidia.svg"
+const INTEL_ICON = metadata.path + "/icons/intel.svg"
 
 
 // ++ Always needed
@@ -44,11 +43,6 @@ MyApplet.prototype = {
                 null); // Optional callback data
 
             // ++ Make metadata values available within applet for context menu.
-            this.cssfile = metadata.path + "/stylesheet.css"; // No longer required
-            this.changelog = metadata.path + "/changelog.txt";
-            this.helpfile = metadata.path + "/help.txt";
-            this.tempfile = metadata.path + "/gputemp.out";
-            this.gputempScript= metadata.path + "/gputempscript.sh";
             this.appletPath = metadata.path;
             this.UUID = metadata.uuid;
             this.nvidiagputemp = 0;
@@ -65,7 +59,6 @@ MyApplet.prototype = {
             this.makeMenu();
 
             // Finally setup to start the update loop for the applet display running
- //           this.hide_applet_icon()
             this.set_applet_label(" "); // show nothing until system stable
             this.set_applet_tooltip("Waiting for Bumblebee");
             Mainloop.timeout_add_seconds(20, Lang.bind(this, this.updateLoop)); // Timer to allow bumbleebee to initiate
@@ -135,60 +128,18 @@ MyApplet.prototype = {
     },
 
     //++ Build left click menu 
-    /*makeMenu: function () {
+    makeMenu: function () {
   try { 
         this.menu.removeAll();
 
-        this.menuitemHead1 = new PopupMenu.PopupMenuItem("Launch programs using the nVidia Graphics Processor", {
-            reactive: false
-        });
-        this.menu.addMenuItem(this.menuitemHead1);
+        this.menuitemHead = new PopupMenu.PopupMenuItem("FIXME", { reactive: false });
+        this.menu.addMenuItem(this.menuitemHead);
 
 
-        if (this.description1 != "null" && this.description1 != "") {
-            this.MenuItem2 = new PopupMenu.PopupMenuItem("    " + this.description1 + " ( " + this.commandString1 + " ) ");
-            this.MenuItem2.connect('activate', Lang.bind(this, function (event) {
-             GLib.spawn_command_line_async(this.commandString1);
-
-            }));
-            this.menu.addMenuItem(this.MenuItem2);
-        }
-
-        if (this.description2 != "null" && this.description2 != "") {
-            this.MenuItem2 = new PopupMenu.PopupMenuItem("    " + this.description2 + " ( " + this.commandString2 + " ) ");
-            this.MenuItem2.connect('activate', Lang.bind(this, function (event) {
-                GLib.spawn_command_line_async(this.commandString2);
-            }));
-            this.menu.addMenuItem(this.MenuItem2);
-        }
-
-        if (this.description3 != "null" && this.description3 != "") {
-            this.MenuItem3 = new PopupMenu.PopupMenuItem("    " + this.description3 + " ( " + this.commandString3 + " ) ");
-            this.MenuItem3.connect('activate', Lang.bind(this, function (event) {
-                GLib.spawn_command_line_async(this.commandString3);
-            }));
-            this.menu.addMenuItem(this.MenuItem3);
-        }
-
-        if (this.description4 != "null" && this.description4 != "") {
-            this.MenuItem4 = new PopupMenu.PopupMenuItem("    " + this.description4 + " ( " + this.commandString4 + " ) ");
-            this.MenuItem4.connect('activate', Lang.bind(this, function (event) {
-                GLib.spawn_command_line_async(this.commandString4);
-            }));
-            this.menu.addMenuItem(this.MenuItem4);
-        }
-
-        if (this.description5 != "null" && this.description5 != "") {
-            this.MenuItem5 = new PopupMenu.PopupMenuItem("    " + this.description5 + " ( " + this.commandString5 + " ) ");
-            this.MenuItem5.connect('activate', Lang.bind(this, function (event) {
-                GLib.spawn_command_line_async(this.commandString5);
-            }));
-            this.menu.addMenuItem(this.MenuItem5);
-        }
       } catch (e) {
           global.logError(e);
       }
-    },*/
+    },
 
     //++ Handler for when the applet is clicked. 
     on_applet_clicked: function (event) {
