@@ -18,6 +18,11 @@ const Lang = imports.lang; //  ++ Needed for menus
 const GLib = imports.gi.GLib; // ++ Needed for starting programs
 const Mainloop = imports.mainloop; // Needed for timer update loop
 
+const APPLET_PATH = "/applets/bumblebee@marmistrz/icons/"
+const NV_ICON = global.userdatadir + APPLET_PATH + "nvidia.svg"
+const INTEL_ICON = global.userdatadir + APPLET_PATH + "intel.svg"
+
+
 // ++ Always needed
 function MyApplet(metadata, orientation, panelHeight, instance_id) {
     this._init(metadata, orientation, panelHeight, instance_id);
@@ -25,10 +30,10 @@ function MyApplet(metadata, orientation, panelHeight, instance_id) {
 
 // ++ Always needed
 MyApplet.prototype = {
-    __proto__: Applet.TextApplet.prototype, // Text Applet
+    __proto__: Applet.TextIconApplet.prototype, // Text Applet
 
     _init: function (metadata, orientation, panelHeight, instance_id) {
-        Applet.TextApplet.prototype._init.call(this, orientation, panelHeight, instance_id);
+        Applet.TextIconApplet.prototype._init.call(this, orientation, panelHeight, instance_id);
         try {
             this.settings = new Settings.AppletSettings(this, metadata.uuid, instance_id); // ++ Picks up UUID from metadata for Settings
 
@@ -114,12 +119,9 @@ MyApplet.prototype = {
             this.buildContextMenu();
             this.makeMenu();
 
-            // Make sure the temp file is created
- //           GLib.spawn_command_line_async('sh ' + this.gputempScript );
-             GLib.spawn_command_line_async('touch /tmp/.gpuTemperature');
-
             // Finally setup to start the update loop for the applet display running
-            this.set_applet_label(" " ); // show nothing until system stable
+ //           this.hide_applet_icon()
+            this.set_applet_label(" "); // show nothing until system stable
             this.set_applet_tooltip("Waiting for Bumblebee");
             Mainloop.timeout_add_seconds(20, Lang.bind(this, this.updateLoop)); // Timer to allow bumbleebee to initiate
 
@@ -270,19 +272,14 @@ MyApplet.prototype = {
       } 
    try {
          if(this.bbst == "OFF") {
-	       this.set_applet_label("GPU OFF" ); 
-               this.set_applet_tooltip("NVidia based GPU is " + this.bbst);
+	          this.set_applet_label(""); 
+            this.set_applet_icon_path(INTEL_ICON);
+            this.set_applet_tooltip("NVidia based GPU is " + this.bbst);
          }
          if(this.bbst == "ON") {
-
-	        this.nvidiagputemp1 = GLib.file_get_contents("/tmp/.gpuTemperature").toString();
-                // Check we have a valid temperature returned before updating 
-                // in case of slow response from nvidia-settings which gives null string
-                if(this.nvidiagputemp1.substr(5,2) > 0){ this.nvidiagputemp = this.nvidiagputemp1.substr(5,2)}; 
-	        this.set_applet_label("GPU " + this.nvidiagputemp + "\u1d3cC" );
-                this.set_applet_tooltip("NVidia based GPU is " + this.bbst + " and Core Temperature is " + this.nvidiagputemp + "\u1d3cC" );
-                // Get temperatures via asyncronous script ready for next cycle
-                GLib.spawn_command_line_async('sh ' + this.gputempScript );
+	          this.set_applet_label(""); 
+            this.set_applet_icon_path(NV_ICON);
+            this.set_applet_tooltip("NVidia based GPU is " + this.bbst);
          } 
       } catch (e) {
           global.logError(e);
