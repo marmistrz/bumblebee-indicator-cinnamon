@@ -1,0 +1,6 @@
+{
+    "max-instances": "1", 
+    "uuid": "bumblebee@marmistrz", 
+    "name": "A simple Bumblebee applet", 
+    "description": "Displays an icon whenever the dedicated graphics card is on"
+}
