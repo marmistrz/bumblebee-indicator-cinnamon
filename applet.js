@@ -43,61 +43,6 @@ MyApplet.prototype = {
                 this.on_settings_changed, // Callback when value changes
                 null); // Optional callback data
 
-            this.settings.bindProperty(Settings.BindingDirection.IN,
-                "description1",
-                "description1",
-                this.on_settings_changed,
-                null);
-            this.settings.bindProperty(Settings.BindingDirection.IN,
-                "commandString1",
-                "commandString1",
-                this.on_settings_changed,
-                null);
-
-            this.settings.bindProperty(Settings.BindingDirection.IN,
-                "description2",
-                "description2",
-                this.on_settings_changed,
-                null);
-            this.settings.bindProperty(Settings.BindingDirection.IN,
-                "commandString2",
-                "commandString2",
-                this.on_settings_changed,
-                null);
-
-            this.settings.bindProperty(Settings.BindingDirection.IN,
-                "description3",
-                "description3",
-                this.on_settings_changed,
-                null);
-            this.settings.bindProperty(Settings.BindingDirection.IN,
-                "commandString3",
-                "commandString3",
-                this.on_settings_changed,
-                null);
-
-            this.settings.bindProperty(Settings.BindingDirection.IN,
-                "description4",
-                "description4",
-                this.on_settings_changed,
-                null);
-            this.settings.bindProperty(Settings.BindingDirection.IN,
-                "commandString4",
-                "commandString4",
-                this.on_settings_changed,
-                null);
-
-            this.settings.bindProperty(Settings.BindingDirection.IN,
-                "description5",
-                "description5",
-                this.on_settings_changed,
-                null);
-            this.settings.bindProperty(Settings.BindingDirection.IN,
-                "commandString5",
-                "commandString5",
-                this.on_settings_changed,
-                null);
-
             // ++ Make metadata values available within applet for context menu.
             this.cssfile = metadata.path + "/stylesheet.css"; // No longer required
             this.changelog = metadata.path + "/changelog.txt";
@@ -190,7 +135,7 @@ MyApplet.prototype = {
     },
 
     //++ Build left click menu 
-    makeMenu: function () {
+    /*makeMenu: function () {
   try { 
         this.menu.removeAll();
 
@@ -243,7 +188,7 @@ MyApplet.prototype = {
       } catch (e) {
           global.logError(e);
       }
-    },
+    },*/
 
     //++ Handler for when the applet is clicked. 
     on_applet_clicked: function (event) {
