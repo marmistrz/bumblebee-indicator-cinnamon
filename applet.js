@@ -18,9 +18,6 @@ const Lang = imports.lang; //  ++ Needed for menus
 const GLib = imports.gi.GLib; // ++ Needed for starting programs
 const Mainloop = imports.mainloop; // Needed for timer update loop
 
-const NV_ICON = metadata.path + "/icons/nvidia.svg"
-const INTEL_ICON = metadata.path + "/icons/intel.svg"
-
 
 // ++ Always needed
 function MyApplet(metadata, orientation, panelHeight, instance_id) {
@@ -45,7 +42,9 @@ MyApplet.prototype = {
             // ++ Make metadata values available within applet for context menu.
             this.appletPath = metadata.path;
             this.UUID = metadata.uuid;
-            this.nvidiagputemp = 0;
+
+            this.NV_ICON = metadata.path + "/icons/nvidia.svg"
+            this.INTEL_ICON = metadata.path + "/icons/intel.svg"
 
             this.applet_running = true; //** New to allow applet to be fully stopped when removed from panel
 
@@ -169,12 +168,12 @@ MyApplet.prototype = {
    try {
          if(this.bbst == "OFF") {
 	          this.set_applet_label(""); 
-            this.set_applet_icon_path(INTEL_ICON);
+            this.set_applet_icon_path(this.INTEL_ICON);
             this.set_applet_tooltip("NVidia based GPU is " + this.bbst);
          }
          if(this.bbst == "ON") {
 	          this.set_applet_label(""); 
-            this.set_applet_icon_path(NV_ICON);
+            this.set_applet_icon_path(this.NV_ICON);
             this.set_applet_tooltip("NVidia based GPU is " + this.bbst);
          } 
       } catch (e) {
