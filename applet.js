@@ -49,13 +49,13 @@ MyApplet.prototype = {
             this.applet_running = true; //** New to allow applet to be fully stopped when removed from panel
 
             // ++ Set up left click menu
-            this.menuManager = new PopupMenu.PopupMenuManager(this);
-            this.menu = new Applet.AppletPopupMenu(this, orientation);
-            this.menuManager.addMenu(this.menu);
+            // this.menuManager = new PopupMenu.PopupMenuManager(this);
+            // this.menu = new Applet.AppletPopupMenu(this, orientation);
+            // this.menuManager.addMenu(this.menu);
 
             // ++ Build Context (Right Click) Menu
-            this.buildContextMenu();
-            this.makeMenu();
+            // this.buildContextMenu();
+            // this.makeMenu();
 
             // Finally setup to start the update loop for the applet display running
             this.set_applet_label(" "); // show nothing until system stable
@@ -69,7 +69,7 @@ MyApplet.prototype = {
 
     // ++ Function called when settings are changed
     on_settings_changed: function () {
-        this.makeMenu();
+        // this.makeMenu();
         this.updateLoop();
     },
 
@@ -78,7 +78,7 @@ MyApplet.prototype = {
     },
 
     // ++ Build the Right Click Context Menu
-    buildContextMenu: function () {
+    /*buildContextMenu: function () {
       try {
         this._applet_context_menu.removeAll();
 
@@ -106,28 +106,13 @@ MyApplet.prototype = {
         this._applet_context_menu.addMenuItem(this.menuitem3);
 
         this._applet_context_menu.addMenuItem(new PopupMenu.PopupSeparatorMenuItem());
-
-        // ++ Set up sub menu for Housekeeping and System Items
-        this.subMenu1 = new PopupMenu.PopupSubMenuMenuItem("Housekeeping and System Sub Menu");
-        this._applet_context_menu.addMenuItem(this.subMenu1);
-
-        this.subMenuItem1 = new PopupMenu.PopupMenuItem("View the Changelog");
-        this.subMenuItem1.connect('activate', Lang.bind(this, function (event) {
-            GLib.spawn_command_line_async('gedit ' + this.changelog);
-        }));
-        this.subMenu1.menu.addMenuItem(this.subMenuItem1); // Note this has subMenu1.menu not subMenu1._applet_context_menu as one might expect
-
-        this.subMenuItem2 = new PopupMenu.PopupMenuItem("Open the Help file");
-        this.subMenuItem2.connect('activate', Lang.bind(this, function (event) {
-        }));
-        this.subMenu1.menu.addMenuItem(this.subMenuItem2);
       } catch (e) {
           global.logError(e);
       }
-    },
+    },*/
 
     //++ Build left click menu 
-    makeMenu: function () {
+    /*makeMenu: function () {
   try { 
         this.menu.removeAll();
 
@@ -138,12 +123,12 @@ MyApplet.prototype = {
       } catch (e) {
           global.logError(e);
       }
-    },
+    },*/
 
     //++ Handler for when the applet is clicked. 
     on_applet_clicked: function (event) {
         this.updateLoop();
-        this.menu.toggle();
+        // this.menu.toggle();
     },
 
     // This updates the numerical display in the applet and in the tooltip
@@ -162,7 +147,7 @@ MyApplet.prototype = {
       } catch (e) {
 //          global.logError(e);  // Comment out to avoid filling error log
           this.bbst = "ERROR"
-	  this.set_applet_label("ERROR" ); 
+	        this.set_applet_label("ERROR" ); 
           this.set_applet_tooltip("Bumblebee is not installed so applet willl not work");          
       } 
    try {
