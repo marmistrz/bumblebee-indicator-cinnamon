@@ -26,7 +26,7 @@ function MyApplet(metadata, orientation, panelHeight, instance_id) {
 
 // ++ Always needed
 MyApplet.prototype = {
-    __proto__: Applet.TextIconApplet.prototype, // Text Applet
+    __proto__: Applet.TextIconApplet.prototype,
 
     _init: function (metadata, orientation, panelHeight, instance_id) {
         Applet.TextIconApplet.prototype._init.call(this, orientation, panelHeight, instance_id);
@@ -48,15 +48,6 @@ MyApplet.prototype = {
 
             this.applet_running = true; //** New to allow applet to be fully stopped when removed from panel
 
-            // ++ Set up left click menu
-            // this.menuManager = new PopupMenu.PopupMenuManager(this);
-            // this.menu = new Applet.AppletPopupMenu(this, orientation);
-            // this.menuManager.addMenu(this.menu);
-
-            // ++ Build Context (Right Click) Menu
-            // this.buildContextMenu();
-            // this.makeMenu();
-
             // Finally setup to start the update loop for the applet display running
             this.set_applet_label(" "); // show nothing until system stable
             this.set_applet_tooltip("Waiting for Bumblebee");
@@ -69,7 +60,6 @@ MyApplet.prototype = {
 
     // ++ Function called when settings are changed
     on_settings_changed: function () {
-        // this.makeMenu();
         this.updateLoop();
     },
 
@@ -77,58 +67,9 @@ MyApplet.prototype = {
     on_generic_changed: function () {
     },
 
-    // ++ Build the Right Click Context Menu
-    /*buildContextMenu: function () {
-      try {
-        this._applet_context_menu.removeAll();
-
-        this._applet_context_menu.addMenuItem(new PopupMenu.PopupSeparatorMenuItem());
-
-        
-        let menuitem1 = new PopupMenu.PopupMenuItem("Open nVidia Settings Program");
-        menuitem1.connect('activate', Lang.bind(this, function (event) {
-            GLib.spawn_command_line_async('optirun -b none nvidia-settings -c :8 ');
-        }));
-        this._applet_context_menu.addMenuItem(menuitem1);
-
-        let menuitem2 = new PopupMenu.PopupMenuItem("Open Power Statistics");
-        menuitem2.connect('activate', Lang.bind(this, function (event) {
-            GLib.spawn_command_line_async('gnome-power-statistics');
-        }));
-        this._applet_context_menu.addMenuItem(menuitem2);
-
-
-
-        this.menuitem3 = new PopupMenu.PopupMenuItem("Open System Monitor");
-        this.menuitem3.connect('activate', Lang.bind(this, function (event) {
-            GLib.spawn_command_line_async('gnome-system-monitor');
-        }));
-        this._applet_context_menu.addMenuItem(this.menuitem3);
-
-        this._applet_context_menu.addMenuItem(new PopupMenu.PopupSeparatorMenuItem());
-      } catch (e) {
-          global.logError(e);
-      }
-    },*/
-
-    //++ Build left click menu 
-    /*makeMenu: function () {
-  try { 
-        this.menu.removeAll();
-
-        this.menuitemHead = new PopupMenu.PopupMenuItem("FIXME", { reactive: false });
-        this.menu.addMenuItem(this.menuitemHead);
-
-
-      } catch (e) {
-          global.logError(e);
-      }
-    },*/
-
     //++ Handler for when the applet is clicked. 
     on_applet_clicked: function (event) {
         this.updateLoop();
-        // this.menu.toggle();
     },
 
     // This updates the numerical display in the applet and in the tooltip
@@ -188,19 +129,5 @@ function main(metadata, orientation, panelHeight, instance_id) {
     return myApplet;
 }
 /*
-Version v20_0.9.8
-v20_0.9.0 Beta 12-12-2013
-v20_0.9.1 Added System Monitor and Power Statistics to right click menu
-v20_0.9.2 Added Left Click Menu with 5 Program Launch Items with configuration in Settings - Release Candidate 14-12-2013 
-v20_0.9.3 Slight tidy up
-v20_0.9.4 Changes to trap errors if bbstatus is not loaded and /proc/acpi/bbstat does not exist
-          and also to trap errors in makeMenu and buildContextMenu and correction of buildContextMenu
-v20_0.9.5 Tested, Error Message changed and some tidying up and commenting
-v20_0.9.6 Replaced Clever Code from gputemperature@silentage with
-          a call to a script and output written to /tmp/.gpuTempperature. 
-          Needed extra call to initialise at the start. 
-v20_0.9.7 Inhibit counter updates after counter removed from panel
-v20_0.9.8 Check we have a valid temperature returned in case of the occasional slow response from nvidia
-          which gave an empty display for one update period. 
-          Checked with Cinnamon 2.4.0 ready for Mint 17.1 - 11-11-2014
+Version 0.1 - rebase on top of bumblebee@pdcurtis
 */
