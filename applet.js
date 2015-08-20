@@ -39,6 +39,8 @@ MyApplet.prototype = {
                 this.on_settings_changed, // Callback when value changes
                 null); // Optional callback data
 
+            this.settings.bindProperty(Settings.BindingDirection.IN, "icon-gpu", "icon_gpu", this.on_settings_changed, null);
+
             // ++ Make metadata values available within applet for context menu.
             this.appletPath = metadata.path;
             this.UUID = metadata.uuid;
@@ -94,12 +96,12 @@ MyApplet.prototype = {
    try {
          if(this.bbst == "OFF") {
 	          this.set_applet_label(""); 
-            this.set_applet_icon_path(this.INTEL_ICON);
+            if (this.icon_gpu == "intel" || this.icon_gpu == "any") this.set_applet_icon_path(this.INTEL_ICON);
             this.set_applet_tooltip("NVidia based GPU is " + this.bbst);
          }
          if(this.bbst == "ON") {
 	          this.set_applet_label(""); 
-            this.set_applet_icon_path(this.NV_ICON);
+            if (this.icon_gpu == "nvidia" || this.icon_gpu == "any") this.set_applet_icon_path(this.NV_ICON);
             this.set_applet_tooltip("NVidia based GPU is " + this.bbst);
          } 
       } catch (e) {
